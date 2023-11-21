@@ -5,7 +5,7 @@ import matplotlib.animation as animation
 
 from dpp.env.car import SimpleCar
 from dpp.env.environment import Environment
-from dpp.test_cases.cases import TestCase
+from dpp.test_cases.cases import TestCase, Hot6Case
 from dpp.utils.utils import plot_a_car
 from dpp.methods.dubins_path import DubinsPath
 
@@ -14,11 +14,12 @@ from time import time
 
 def main():
 
-    tc = TestCase()
+    # tc = TestCase()
+    tc = Hot6Case()
 
     env = Environment(tc.obs)
 
-    car = SimpleCar(env, tc.start_pos2, tc.end_pos2)
+    car = SimpleCar(env, tc.start_pos, tc.end_pos)
 
     dubins = DubinsPath(car)
 
@@ -95,7 +96,7 @@ def main():
 
         return _carl, _car
 
-    ani = animation.FuncAnimation(fig, animate, frames=frames, interval=1,
+    ani = animation.FuncAnimation(fig, animate, frames=frames, interval=100,
                                   repeat=True, blit=True)
 
     plt.show()

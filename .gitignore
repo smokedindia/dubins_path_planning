@@ -1,2 +1,5 @@
 .DS_Store
 *.pyc
+*.png
+*.mp4
+scratch*
