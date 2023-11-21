@@ -8,20 +8,22 @@ import argparse
 from dpp.env.grid import Grid
 from dpp.env.car import SimpleCar
 from dpp.env.environment import Environment
-from dpp.test_cases.cases import TestCase
+from dpp.test_cases.cases import TestCase, Hot6Case
 from dpp.utils.utils import plot_a_car
 from dpp.methods.hybrid_astar import HybridAstar
 
 from time import time
+import math
 
 
 def main(heu=1, reverse=False, extra=False, grid_on=False):
 
-    tc = TestCase()
+    # tc = TestCase()
+    tc = Hot6Case()
 
     env = Environment(tc.obs)
 
-    car = SimpleCar(env, tc.start_pos, tc.end_pos)
+    car = SimpleCar(env, tc.start_pos, tc.end_pos, l=0.8, max_phi=math.pi/6)
 
     grid = Grid(env)
     
