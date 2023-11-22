@@ -22,11 +22,11 @@ def main(parking_idx, heu=1, reverse=False, extra=False, grid_on=False):
 
     env = Environment(tc.obs)
 
-    car = SimpleCar(env, tc.start_pos, tc.end_pos, l=0.9, max_phi=math.pi / 6)
+    car = SimpleCar(env, tc.start_pos, tc.end_pos, l=0.4, max_phi=math.pi / 6)
 
     grid = Grid(env, cell_size=0.25)
 
-    hastar = HybridAstar(car, grid, reverse)
+    hastar = HybridAstar(car, grid, reverse, unit_theta=math.pi / 10)
 
     t = time()
     path, closed_ = hastar.search_path(heu, extra)

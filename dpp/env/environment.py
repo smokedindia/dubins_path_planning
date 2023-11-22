@@ -5,7 +5,7 @@ from dpp.utils.intersection import rectangle_ringsector_intersected
 class Environment:
     """ The map configuration. """
 
-    def __init__(self, obs=None, lx=10, ly=10):
+    def __init__(self, obs=None, lx=6, ly=5.5):
 
         self.lx  = float(lx)
         self.ly  = float(ly)
