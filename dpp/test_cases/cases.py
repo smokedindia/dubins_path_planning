@@ -22,9 +22,9 @@ class TestCase:
 
 
 class Hot6Case:
-    def __init__(self, parking_idx, reverse) -> None:
+    def __init__(self, parking_idx, backward) -> None:
         # self.start_pos = [2.8, 5, pi]
-        if reverse:
+        if backward:
             self.start_pos = [4, 2.5, 0]
         else:
             self.start_pos = [1.5, 4, -pi / 2]
@@ -43,9 +43,9 @@ class Hot6Case:
         else:
             raise ValueError("parking_idx must be 1, 2, 3 or 4")
         
-        if reverse:
+        if backward:
             self.end_pos[2] *= -1
-            self.end_pos[1] -= 0.2  # vertical offset for reverse parking
+            self.end_pos[1] -= 0.2  # vertical offset for backward parking
         else:
             self.end_pos[1] += 0.3  # vertical offset for forward parking
 

@@ -16,9 +16,9 @@ from time import time
 import math
 
 
-def main(parking_idx, heu=1, reverse=False, extra=False, grid_on=False):
+def main(parking_idx, heu=1, reverse=False, extra=False, grid_on=False, backward=False):
     # tc = TestCase()
-    tc = Hot6Case(parking_idx=parking_idx, reverse=reverse)
+    tc = Hot6Case(parking_idx=parking_idx, backward=backward)
 
     env = Environment(tc.obs)
 
@@ -154,10 +154,11 @@ def main(parking_idx, heu=1, reverse=False, extra=False, grid_on=False):
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("-heu", type=int, default=1, help="heuristic type")
-    p.add_argument("-r", action="store_true", help="allow reverse or not")
+    p.add_argument("-r", default=True, help="allow reverse or not")
+    p.add_argument('-b', action='store_true', help='backward parking')
     p.add_argument("-e", action="store_true", help="add extra cost or not")
     p.add_argument("-g", action="store_true", help="show grid or not")
     p.add_argument("--parking_idx", type=int, default=2, help="parking index")
     args = p.parse_args()
 
-    main(heu=args.heu, reverse=args.r, extra=args.e, grid_on=args.g, parking_idx=args.parking_idx)
+    main(heu=args.heu, reverse=args.r, extra=args.e, grid_on=args.g, parking_idx=args.parking_idx, backward=args.b)
