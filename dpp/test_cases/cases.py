@@ -22,16 +22,25 @@ class TestCase:
 
 
 class Hot6Case:
-    def __init__(self) -> None:
+    def __init__(self, parking_idx, reverse) -> None:
         self.start_pos = [4.8, 8.35, pi]
-        # 1
-        self.end_pos = [1.205, 1.5, pi / 2]
-        # 2
-        # self.end_pos = [2.455, 1.5, pi / 2]
-        # 3
-        # self.end_pos = [3.705, 1.5, pi / 2]
-        # 4
-        # self.end_pos = [4.955, 1.5, pi / 2]
+        if parking_idx == 1:
+            # 1
+            self.end_pos = [1.205, 1.5, -pi / 2]
+        elif parking_idx == 2:
+            # 2
+            self.end_pos = [2.455, 1.5, -pi / 2]
+        elif parking_idx == 3:
+            # 3
+            self.end_pos = [3.705, 1.5, -pi / 2]
+        elif parking_idx == 4:
+            # 4
+            self.end_pos = [4.955, 1.5, -pi / 2]
+        else:
+            raise ValueError("parking_idx must be 1, 2, 3 or 4")
+        
+        if reverse:
+            self.end_pos[2] *= -1
 
         self.obs = [
             [0.58, 0, 0.1, 2.2],

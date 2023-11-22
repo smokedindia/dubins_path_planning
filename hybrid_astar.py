@@ -16,15 +16,15 @@ from time import time
 import math
 
 
-def main(heu=1, reverse=False, extra=False, grid_on=False):
+def main(parking_idx, heu=1, reverse=False, extra=False, grid_on=False):
     # tc = TestCase()
-    tc = Hot6Case()
+    tc = Hot6Case(parking_idx=parking_idx, reverse=reverse)
 
     env = Environment(tc.obs)
 
-    car = SimpleCar(env, tc.start_pos, tc.end_pos, l=0.7, max_phi=math.pi / 4)
+    car = SimpleCar(env, tc.start_pos, tc.end_pos, l=0.9, max_phi=math.pi / 6)
 
-    grid = Grid(env)
+    grid = Grid(env, cell_size=0.25)
 
     hastar = HybridAstar(car, grid, reverse)
 
@@ -144,6 +144,9 @@ def main(heu=1, reverse=False, extra=False, grid_on=False):
     ani = animation.FuncAnimation(
         fig, animate, init_func=init, frames=frames, interval=1, repeat=True, blit=True
     )
+    # save animation
+    fpath = f"hybrid_astar_{parking_idx}.mp4" if not reverse else f"hybrid_astar_{parking_idx}_r.mp4"
+    ani.save(fpath, writer='ffmpeg', fps=30)
 
     plt.show()
 
@@ -154,6 +157,7 @@ if __name__ == "__main__":
     p.add_argument("-r", action="store_true", help="allow reverse or not")
     p.add_argument("-e", action="store_true", help="add extra cost or not")
     p.add_argument("-g", action="store_true", help="show grid or not")
+    p.add_argument("--parking_idx", type=int, default=2, help="parking index")
     args = p.parse_args()
 
-    main(heu=args.heu, reverse=args.r, extra=args.e, grid_on=args.g)
+    main(heu=args.heu, reverse=args.r, extra=args.e, grid_on=args.g, parking_idx=args.parking_idx)
