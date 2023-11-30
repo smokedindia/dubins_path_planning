@@ -22,7 +22,7 @@ def main(parking_idx, heu=1, reverse=False, extra=False, grid_on=False, backward
 
     env = Environment(tc.obs)
 
-    car = SimpleCar(env, tc.start_pos, tc.end_pos, l=0.5, max_phi=math.pi / 6)
+    car = SimpleCar(env, tc.start_pos, tc.end_pos, l=0.5, max_phi=math.pi / 5)
 
     grid = Grid(env, cell_size=0.1)
 
@@ -150,6 +150,7 @@ def main(parking_idx, heu=1, reverse=False, extra=False, grid_on=False, backward
     fpath = f"hybrid_astar_{parking_idx}.mp4" if not backward else f"hybrid_astar_{parking_idx}_r.mp4"
     if save:
         ani.save(fpath, writer='ffmpeg', fps=30)
+        np.save(fpath.replace('.mp4', '.npy'), np.array([p.pos for p in path]))
 
     plt.show()
 
