@@ -30,7 +30,8 @@ def main(parking_idx, heu=1, reverse=False, extra=False, grid_on=False, backward
 
     t = time()
     path, closed_ = hastar.search_path(heu, extra)
-    print("Total time: {}s".format(round(time() - t, 3)))
+    end = time()
+    print("Total time: {}s".format(round(end - t, 3)))
 
     if not path:
         print("No valid path!")
@@ -76,6 +77,7 @@ def main(parking_idx, heu=1, reverse=False, extra=False, grid_on=False, backward
         ax.add_patch(Rectangle((ob.x, ob.y), ob.w, ob.h, fc="gray", ec="k"))
 
     ax.plot(car.start_pos[0], car.start_pos[1], "ro", markersize=6)
+    plt.title(f'time: {round(end - t, 3)}s')
     ax = plot_a_car(ax, end_state.model)
     ax = plot_a_car(ax, start_state.model)
 
@@ -145,7 +147,7 @@ def main(parking_idx, heu=1, reverse=False, extra=False, grid_on=False, backward
         fig, animate, init_func=init, frames=frames, interval=10, repeat=True, blit=True
     )
     # save animation
-    fpath = f"hybrid_astar_{parking_idx}.mp4" if not reverse else f"hybrid_astar_{parking_idx}_r.mp4"
+    fpath = f"hybrid_astar_{parking_idx}.mp4" if not backward else f"hybrid_astar_{parking_idx}_r.mp4"
     if save:
         ani.save(fpath, writer='ffmpeg', fps=30)
 
