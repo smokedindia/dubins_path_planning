@@ -16,7 +16,7 @@ from time import time
 import math
 
 
-def main(parking_idx, heu=1, reverse=False, extra=False, grid_on=False, backward=False):
+def main(parking_idx, heu=1, reverse=False, extra=False, grid_on=False, backward=False, save=False):
     # tc = TestCase()
     tc = Hot6Case(parking_idx=parking_idx, backward=backward)
 
@@ -142,11 +142,12 @@ def main(parking_idx, heu=1, reverse=False, extra=False, grid_on=False, backward
         return _branches, _path, _carl, _path1, _car
 
     ani = animation.FuncAnimation(
-        fig, animate, init_func=init, frames=frames, interval=1, repeat=True, blit=True
+        fig, animate, init_func=init, frames=frames, interval=10, repeat=True, blit=True
     )
     # save animation
     fpath = f"hybrid_astar_{parking_idx}.mp4" if not reverse else f"hybrid_astar_{parking_idx}_r.mp4"
-    ani.save(fpath, writer='ffmpeg', fps=30)
+    if save:
+        ani.save(fpath, writer='ffmpeg', fps=30)
 
     plt.show()
 
@@ -154,11 +155,12 @@ def main(parking_idx, heu=1, reverse=False, extra=False, grid_on=False, backward
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("-heu", type=int, default=1, help="heuristic type")
-    p.add_argument("-r", default=True, help="allow reverse or not")
-    p.add_argument('-b', action='store_true', help='backward parking')
-    p.add_argument("-e", action="store_true", help="add extra cost or not")
-    p.add_argument("-g", action="store_true", help="show grid or not")
+    p.add_argument("-r", "--reverse", default=True, help="allow reverse or not")
+    p.add_argument('-b', "--backward", action='store_true', help='backward parking')
+    p.add_argument("-e", "--extra", action="store_true", help="add extra cost or not")
+    p.add_argument("-g", "--grid_on", action="store_true", help="show grid or not")
     p.add_argument("--parking_idx", type=int, default=2, help="parking index")
+    p.add_argument("-s", "--save", action="store_true", help="save animation")
     args = p.parse_args()
 
-    main(heu=args.heu, reverse=args.r, extra=args.e, grid_on=args.g, parking_idx=args.parking_idx, backward=args.b)
+    main(**vars(args))

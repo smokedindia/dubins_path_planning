@@ -25,9 +25,16 @@ class Hot6Case:
     def __init__(self, parking_idx, backward) -> None:
         # self.start_pos = [2.8, 5, pi]
         if backward:
-            self.start_pos = [4, 2.5, 0]
+            if parking_idx == 4:
+                """
+                for the last parking lot, the car should be placed 
+                a little bit to the right
+                """
+                self.start_pos = [3.5, 3, 0]
+            else:
+                self.start_pos = [3, 3, 0]
         else:
-            self.start_pos = [1.5, 4, -pi / 2]
+            self.start_pos = [1.5, 4.5, -pi / 2]
         if parking_idx == 1:
             # 1
             self.end_pos = [0.35 + 0.75/2, 1.35/2, -pi / 2]
@@ -45,9 +52,11 @@ class Hot6Case:
         
         if backward:
             self.end_pos[2] *= -1
-            self.end_pos[1] -= 0.2  # vertical offset for backward parking
+            self.end_pos[1] += 0.1  # vertical offset for backward parking
         else:
             self.end_pos[1] += 0.3  # vertical offset for forward parking
+        
+        # self.end_pos = [1.5, 3, -pi / 2]
 
         self.obs = [
             [0.35, 0, 0.05, 1.35],

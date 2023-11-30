@@ -10,16 +10,18 @@ from dpp.utils.utils import plot_a_car
 from dpp.methods.dubins_path import DubinsPath
 
 from time import time
+import math
+import argparse
 
 
-def main():
+def main(parking_idx, reverse=False, backward=False, **kwargs):
 
     # tc = TestCase()
-    tc = Hot6Case()
+    tc = Hot6Case(parking_idx, backward)
 
     env = Environment(tc.obs)
 
-    car = SimpleCar(env, tc.start_pos, tc.end_pos)
+    car = SimpleCar(env, tc.start_pos, tc.end_pos, l=0.5, max_phi=math.pi / 6)
 
     dubins = DubinsPath(car)
 
@@ -103,4 +105,13 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    p = argparse.ArgumentParser()
+    p.add_argument("-heu", type=int, default=1, help="heuristic type")
+    p.add_argument("-r", "--reverse", default=True, help="allow reverse or not")
+    p.add_argument('-b', "--backward", action='store_true', help='backward parking')
+    p.add_argument("-e", "--extra", action="store_true", help="add extra cost or not")
+    p.add_argument("-g", "--grid_on", action="store_true", help="show grid or not")
+    p.add_argument("--parking_idx", type=int, default=2, help="parking index")
+    args = p.parse_args()
+
+    main(**vars(args))
